@@ -1,0 +1,40 @@
+# Python bytecode / cache
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+
+# Virtual environments
+venv/
+.env
+.env.*/
+
+# Package/build artifacts
+*.egg-info/
+*.dist-info/
+build/
+dist/
+
+# IDE/editor
+.vscode/
+.idea/
+.cursor/
+
+# Logs
+*.log
+
+# Large media/weights
+*.mp4
+*.mov
+*.MOV
+*.avi
+*.mkv
+*.webm
+*.pt
+*.pth
+*.ckpt
+
+# OS junk
+.DS_Store
+Thumbs.db
+

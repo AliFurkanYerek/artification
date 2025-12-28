@@ -1,0 +1,232 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Beklenen Yoğunluk | Nilüfer Sosyal Tesisler</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      font-family: "Inter", "Segoe UI", system-ui, -apple-system, sans-serif;
+    }
+    body {
+      margin: 0;
+      padding: 32px;
+      min-height: 100vh;
+      background:
+        linear-gradient(180deg, rgba(5,10,20,0.72) 0%, rgba(5,10,20,0.88) 100%),
+        url("../image.png") center top / cover no-repeat fixed;
+      color: #e5e7eb;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .shell {
+      width: min(960px, 100%);
+      background: rgba(10, 15, 31, 0.82);
+      border: 1px solid rgba(255,255,255,0.08);
+      backdrop-filter: blur(8px);
+      border-radius: 18px;
+      padding: 28px 30px;
+      box-shadow: 0 18px 50px rgba(0,0,0,0.45);
+    }
+    header { display: flex; gap: 14px; align-items: center; margin-bottom: 20px; }
+    .logo {
+      height: 62px;
+      width: auto;
+      border-radius: 14px;
+      background: rgba(255,255,255,0.04);
+      padding: 6px;
+      filter: drop-shadow(0 6px 18px rgba(0,0,0,0.35));
+    }
+    h1 { margin: 0; font-size: 26px; }
+    p.lead { margin: 6px 0 18px; color: #cbd5e1; }
+    .form {
+      display: grid;
+      gap: 14px;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      margin-top: 10px;
+    }
+    label { font-weight: 700; color: #cbd5e1; display: block; margin-bottom: 6px; }
+    input, select, button {
+      width: 100%;
+      padding: 12px 14px;
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,0.08);
+      background: rgba(255,255,255,0.06);
+      color: #e5e7eb;
+      font-size: 15px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+    }
+    button {
+      cursor: pointer;
+      background: linear-gradient(135deg, #38bdf8, #6366f1);
+      color: #0b1224;
+      font-weight: 800;
+      transition: transform 0.15s ease, box-shadow 0.2s ease, background 0.2s ease;
+      border: none;
+    }
+    button:hover { transform: translateY(-2px); box-shadow: 0 16px 36px rgba(0,0,0,0.35); }
+    .actions { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 6px; }
+    .btn-link {
+      padding: 10px 12px;
+      border-radius: 10px;
+      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(255,255,255,0.07);
+      color: #e5e7eb;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 13px;
+      transition: transform 0.12s ease, background 0.2s ease;
+    }
+    .btn-link:hover { transform: translateY(-1px); background: rgba(255,255,255,0.12); }
+    .card {
+      margin-top: 18px;
+      border: 1px solid rgba(255,255,255,0.08);
+      background: rgba(10, 15, 31, 0.72);
+      border-radius: 14px;
+      padding: 14px 16px;
+      box-shadow: 0 14px 40px rgba(0,0,0,0.35);
+      min-height: 140px;
+    }
+    .muted { color: #94a3b8; }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <header>
+      <img class="logo" src="../indir.png" alt="Nilüfer Belediyesi Logosu">
+      <div>
+        <h1>Beklenen Yoğunluk</h1>
+        <p class="lead">Tarih seçerek beklenen yoğunluğu görüntüleyin.</p>
+      </div>
+    </header>
+
+    <div class="form">
+      <div>
+        <label for="place">Mekan</label>
+        <select id="place">
+          <option value="kütüphane">Kütüphane</option>
+          <option value="kafe">Kafe</option>
+        </select>
+      </div>
+      <div>
+        <label for="date">Tarih seçin</label>
+        <input type="date" id="date">
+      </div>
+      <div style="align-self: end;">
+        <button id="btnFetch">Beklenen Yoğunluğu Göster</button>
+      </div>
+    </div>
+
+    <div class="card" id="result">
+      <p class="muted">Tarih ve saat seçip "Beklenen Yoğunluğu Göster" butonuna tıklayın.</p>
+    </div>
+
+    <div class="actions">
+      <a class="btn-link" href="./home.html">← Ana Sayfa</a>
+      <a class="btn-link" href="./index.html">Canlı Doluluk</a>
+    </div>
+  </div>
+
+  <script>
+    const result = document.getElementById("result");
+    const place = document.getElementById("place");
+    const date = document.getElementById("date");
+    // saat kaldırıldı
+    const btn = document.getElementById("btnFetch");
+
+    // Basit, deterministik bir rastgele üretici (aynı tarih ve mekân için aynı sonuç).
+    function seededRandomInt(min, max, seedStr) {
+      let h = 0;
+      for (let i = 0; i < seedStr.length; i++) h = (h * 31 + seedStr.charCodeAt(i)) >>> 0;
+      h ^= h << 13; h ^= h >>> 17; h ^= h << 5;
+      const r = (h >>> 0) / 0xffffffff;
+      return Math.round(min + r * (max - min));
+    }
+
+    function getDateForWeekday(refDate, targetDow) {
+      const d = new Date(refDate);
+      const current = d.getDay(); // 0 pazar, 1 pazartesi ... 6 cumartesi
+      const diff = targetDow - current;
+      d.setDate(d.getDate() + diff);
+      return d;
+    }
+
+    function calcOccupancy(selectedDate, placeKey) {
+      const cache = {};
+      function valueForDow(dow) {
+        if (cache[dow] !== undefined) return cache[dow];
+        // Gün tarihini haftaya göre al
+        const dayDate = getDateForWeekday(selectedDate, dow);
+        const seed = `${placeKey}-${dayDate.toISOString().slice(0,10)}`;
+
+        let val;
+        if (dow === 5 || dow === 6 || dow === 0) {
+          // Cuma(5), Cumartesi(6), Pazar(0): %50-100 arası
+          val = seededRandomInt(50, 100, seed);
+        } else if (dow === 1) {
+          // Pazartesi: Cuma-Cumartesi-Pazar ortalaması
+          const fri = valueForDow(5);
+          const sat = valueForDow(6);
+          const sun = valueForDow(0);
+          val = Math.round((fri + sat + sun) / 3);
+        } else if (dow === 2 || dow === 3) {
+          // Salı, Çarşamba: 1-100 arası
+          val = seededRandomInt(1, 100, seed);
+        } else if (dow === 4) {
+          // Perşembe: Pazartesi + Salı + Çarşamba ortalaması
+          const mon = valueForDow(1);
+          const tue = valueForDow(2);
+          const wed = valueForDow(3);
+          val = Math.round((mon + tue + wed) / 3);
+        } else {
+          val = 0;
+        }
+        cache[dow] = Math.max(0, Math.min(100, val));
+        return cache[dow];
+      }
+
+      const targetDow = selectedDate.getDay();
+      return valueForDow(targetDow);
+    }
+
+    function pickWeather(seedStr) {
+      const options = ["Yağmurlu", "Rüzgarlı", "Güneşli"];
+      const idx = seededRandomInt(0, options.length - 1, seedStr);
+      return options[idx];
+    }
+
+    function applyWeather(occ, weather) {
+      if (occ == null) return null;
+      if (weather === "Yağmurlu") return Math.max(0, Math.round(occ * 0.9));
+      if (weather === "Rüzgarlı") return Math.max(0, Math.round(occ * 0.95));
+      if (weather === "Güneşli") return Math.min(100, Math.round(occ * 1.1));
+      return occ;
+    }
+
+    btn.addEventListener("click", () => {
+      if (!date.value) {
+        result.innerHTML = `<p class="muted">Lütfen bir tarih seçin.</p>`;
+        return;
+      }
+
+      const p = place.value;
+      const dStr = date.value;
+      const selectedDate = new Date(`${dStr}T00:00:00`);
+
+      const baseOcc = calcOccupancy(selectedDate, p);
+      const placeLabel = p === "kütüphane" ? "Kütüphane" : "Kafe";
+      const weather = pickWeather(`${p}-${dStr}-weather`);
+      const adjOcc = applyWeather(baseOcc, weather);
+
+      result.innerHTML = `
+        <p><strong>${placeLabel}</strong> için</p>
+        <p>${dStr} tarihinde beklenen yoğunluk: <strong>${adjOcc ?? "-"}%</strong></p>
+        <p>Hava durumu: <strong>${weather}</strong> (baz değer: ${baseOcc}%)
+      `;
+    });
+  </script>
+</body>
+</html>
+

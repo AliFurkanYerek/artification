@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nilüfer Sosyal Tesisler | Ana Sayfa</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      font-family: "Inter", "Segoe UI", system-ui, -apple-system, sans-serif;
+    }
+    body {
+      margin: 0;
+      padding: 32px;
+      min-height: 100vh;
+      background:
+        linear-gradient(180deg, rgba(5,10,20,0.72) 0%, rgba(5,10,20,0.88) 100%),
+        url("../image.png") center top / cover no-repeat fixed;
+      color: #e5e7eb;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .shell {
+      width: min(960px, 100%);
+      background: rgba(10, 15, 31, 0.82);
+      border: 1px solid rgba(255,255,255,0.08);
+      backdrop-filter: blur(8px);
+      border-radius: 18px;
+      padding: 28px 30px;
+      box-shadow: 0 18px 50px rgba(0,0,0,0.45);
+    }
+    header {
+      display: flex;
+      gap: 14px;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+    .brand {
+      width: 46px; height: 46px; border-radius: 14px;
+      background: linear-gradient(135deg, #22c55e, #14b8a6);
+      color: #0b1224; display: grid; place-items: center;
+      font-weight: 800; letter-spacing: -0.02em; box-shadow: 0 10px 30px rgba(20,184,166,0.35);
+    }
+    h1 { margin: 0; font-size: 26px; }
+    p.lead { margin: 6px 0 18px; color: #cbd5e1; }
+    .actions { display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+    .btn {
+      padding: 18px 22px;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,0.08);
+      background: rgba(255,255,255,0.06);
+      color: #e5e7eb;
+      text-decoration: none;
+      font-weight: 800;
+      font-size: 16px;
+      text-align: center;
+      box-shadow: 0 12px 34px rgba(0,0,0,0.28);
+      transition: transform 0.15s ease, box-shadow 0.2s ease, background 0.2s ease;
+    }
+    .btn:hover { transform: translateY(-2px); background: rgba(255,255,255,0.1); box-shadow: 0 16px 36px rgba(0,0,0,0.35); }
+    .btn.primary { background: linear-gradient(135deg, #22c55e, #14b8a6); color: #0b1224; }
+    .btn.secondary { background: linear-gradient(135deg, #38bdf8, #6366f1); color: #0b1224; }
+    .btn.tertiary { background: linear-gradient(135deg, #f59e0b, #f97316); color: #0b1224; }
+    .logo {
+      height: 72px;
+      width: auto;
+      border-radius: 14px;
+      filter: drop-shadow(0 6px 18px rgba(0,0,0,0.35));
+      background: rgba(255,255,255,0.04);
+      padding: 6px;
+    }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <header>
+      <img class="logo" src="../indir.png" alt="Nilüfer Belediyesi Logosu">
+      <div>
+        <h1>Nilüfer Belediyesi Sosyal Tesisleri</h1>
+        <p class="lead">Hızlı erişim: Harita konumları veya canlı doluluk oranları.</p>
+      </div>
+    </header>
+    <div class="actions">
+      <a class="btn primary" href="./map.html">Haritada Yerleri Göster</a>
+      <a class="btn secondary" href="./index.html">Doluluk Oranlarını Göster</a>
+      <a class="btn tertiary" href="./forecast.html">Beklenen Yoğunluk</a>
+    </div>
+  </div>
+</body>
+</html>
+

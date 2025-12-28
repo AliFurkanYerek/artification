@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nilüfer Sosyal Tesisler | Harita</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      font-family: "Inter", "Segoe UI", system-ui, -apple-system, sans-serif;
+    }
+    body {
+      margin: 0;
+      padding: 24px;
+      min-height: 100vh;
+      background:
+        linear-gradient(180deg, rgba(5,10,20,0.72) 0%, rgba(5,10,20,0.88) 100%),
+        url("../image.png") center top / cover no-repeat fixed;
+      color: #e5e7eb;
+    }
+    .shell { max-width: 1200px; margin: 0 auto; }
+    header { display: flex; gap: 12px; align-items: center; margin-bottom: 18px; }
+    .logo {
+      height: 72px;
+      width: auto;
+      border-radius: 16px;
+      background: rgba(255,255,255,0.04);
+      padding: 8px;
+      filter: drop-shadow(0 6px 18px rgba(0,0,0,0.35));
+      object-fit: contain;
+    }
+    h1 { margin: 0; font-size: 24px; }
+    .grid { display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); }
+    .card {
+      border: 1px solid rgba(255,255,255,0.08);
+      background: rgba(10, 15, 31, 0.82);
+      backdrop-filter: blur(6px);
+      border-radius: 14px;
+      padding: 14px;
+      box-shadow: 0 14px 40px rgba(0,0,0,0.35);
+      min-height: 340px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .card h2 { margin: 0; font-size: 18px; }
+    .map-frame {
+      border: 0;
+      width: 100%;
+      height: 260px;
+      border-radius: 10px;
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.05);
+    }
+    .links { display: flex; gap: 10px; flex-wrap: wrap; }
+    .btn {
+      padding: 10px 12px;
+      border-radius: 10px;
+      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(255,255,255,0.07);
+      color: #e5e7eb;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 13px;
+      transition: transform 0.12s ease, background 0.2s ease;
+    }
+    .btn:hover { transform: translateY(-1px); background: rgba(255,255,255,0.12); }
+    .back-wrap {
+      display: flex;
+      justify-content: flex-end;
+      margin-top: 12px;
+    }
+    .back-btn {
+      padding: 6px;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(255,255,255,0.06);
+      display: inline-flex;
+      box-shadow: 0 12px 30px rgba(0,0,0,0.28);
+      transition: transform 0.12s ease, box-shadow 0.2s ease, background 0.2s ease;
+    }
+    .back-btn img {
+      height: 48px;
+      width: auto;
+      border-radius: 10px;
+      display: block;
+    }
+    .back-btn:hover { transform: translateY(-1px); box-shadow: 0 16px 36px rgba(0,0,0,0.32); }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <header>
+      <img class="logo" src="../indir.png" alt="Nilüfer Belediyesi Logosu">
+      <div>
+        <h1>Haritada Yerler</h1>
+        <p class="lead">Kütüphane ve Kafe konumlarını inceleyin.</p>
+      </div>
+    </header>
+
+    <div class="grid">
+      <div class="card">
+        <h2>Uyanık Kütüphane</h2>
+        <iframe class="map-frame"
+          src="https://www.openstreetmap.org/export/embed.html?bbox=28.840317%2C40.2173005%2C28.860317%2C40.2373005&layer=mapnik&marker=40.2273005%2C28.850317"
+          referrerpolicy="no-referrer-when-downgrade"
+          allowfullscreen
+          loading="lazy">
+        </iframe>
+        <div class="links">
+          <a class="btn" href="https://www.google.com/maps/place/UYANIK+K%C3%9CT%C3%9CPHANE+BURSA/@40.1820402,28.7472615,12z/data=!4m10!1m2!2m1!1zTmlsw7xmZXIga8O8dMO8cGhhbmU!3m6!1s0x14ca0fdb47db21d9:0x6e90c9c8222980c3!8m2!3d40.2273005!4d28.850317!15sChROaWzDvGZlciBrw7x0w7xwaGFuZZIBB2xpYnJhcnngAQA!16s%2Fg%2F11mn8478wt?entry=ttu"
+            target="_blank" rel="noreferrer">Google Maps’te Aç</a>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>Rota Cafe</h2>
+        <iframe class="map-frame"
+          src="https://www.openstreetmap.org/export/embed.html?bbox=28.9381863%2C40.1878121%2C28.9581863%2C40.2078121&layer=mapnik&marker=40.1978121%2C28.9481863"
+          referrerpolicy="no-referrer-when-downgrade"
+          allowfullscreen
+          loading="lazy">
+        </iframe>
+        <div class="links">
+          <a class="btn" href="https://www.google.com/maps/place/Rota+Cafe/@40.2435939,28.8015064,12z/data=!4m10!1m2!2m1!1sNil%C3%BCfer+kafe!3m6!1s0x14ca1135c9a1647b:0xd229882f66a7e437!8m2!3d40.1978121!4d28.9481863!15sCg1OaWzDvGZlciBrYWZlWg8iDW5pbMO8ZmVyIGthZmWSAQRjYWZlmgEjQ2haRFNVaE5NRzluUzBWSlEwRm5TVVJTZVRZemEwRm5FQUXgAQD6AQUImAEQPw!16s%2Fg%2F11b7q41l2b?entry=ttu"
+            target="_blank" rel="noreferrer">Google Maps’te Aç</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="back-wrap">
+      <a class="back-btn" href="./home.html" title="Ana Sayfa">Ana Sayfa</a>
+    </div>
+  </div>
+</body>
+</html>
+

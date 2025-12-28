@@ -1,0 +1,286 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nilüfer Sosyal Tesis Doluluk Paneli</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      font-family: "Inter", "Segoe UI", system-ui, -apple-system, sans-serif;
+    }
+    body {
+      margin: 0;
+      padding: 32px;
+      min-height: 100vh;
+      background:
+        linear-gradient(180deg, rgba(5,10,20,0.72) 0%, rgba(5,10,20,0.88) 100%),
+        url("../image.png") center top / cover no-repeat fixed;
+      color: #e5e7eb;
+    }
+    .shell {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    header {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 22px;
+      flex-wrap: wrap;
+    }
+    .appbar {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .logo {
+      height: 62px;
+      width: auto;
+      border-radius: 14px;
+      background: rgba(255,255,255,0.04);
+      padding: 6px;
+      filter: drop-shadow(0 6px 18px rgba(0,0,0,0.35));
+    }
+    h1 { margin: 0; font-size: 24px; }
+    p.lead { margin: 6px 0 18px; color: #cbd5e1; max-width: 820px; }
+    .grid {
+      display: grid;
+      gap: 18px;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    }
+    .card {
+      border: 1px solid rgba(255,255,255,0.06);
+      background: rgba(17, 24, 39, 0.78);
+      padding: 16px 18px;
+      border-radius: 14px;
+      box-shadow: 0 10px 35px rgba(0,0,0,0.35);
+      backdrop-filter: blur(6px);
+      min-height: 170px;
+    }
+    .card h2 { margin: 0 0 10px; font-size: 18px; display: flex; align-items: center; gap: 8px; }
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.01em;
+    }
+    .pill.ok { background: rgba(34,197,94,0.15); color: #4ade80; }
+    .pill.mid { background: rgba(234,179,8,0.15); color: #facc15; }
+    .pill.high { background: rgba(248,113,113,0.18); color: #f87171; }
+    .pill.info { background: rgba(59,130,246,0.18); color: #bfdbfe; }
+    .stat { display: flex; justify-content: space-between; margin: 8px 0; }
+    .label { color: #94a3b8; }
+    .value { font-weight: 800; font-size: 17px; letter-spacing: -0.01em; }
+    .muted { color: #64748b; }
+    .error { color: #f87171; }
+    .updated { color: #22c55e; font-size: 12px; margin-top: 10px; }
+    .circles {
+      margin-top: 26px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 16px;
+      justify-items: center;
+    }
+    .circle-wrap {
+      display: grid;
+      place-items: center;
+      gap: 6px;
+    }
+    .circle {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      border: 1px solid rgba(255,255,255,0.08);
+      background: conic-gradient(#22c55e 0deg, #22c55e 0deg, rgba(255,255,255,0.06) 0deg);
+      box-shadow: 0 12px 30px rgba(0,0,0,0.35);
+      display: grid;
+      place-items: center;
+      position: relative;
+    }
+    .circle::after {
+      content: "";
+      position: absolute;
+      inset: 12px;
+      border-radius: 50%;
+      background: rgba(10,15,31,0.75);
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.05);
+    }
+    .circle-text {
+      position: relative;
+      font-weight: 800;
+      font-size: 18px;
+      letter-spacing: -0.02em;
+    }
+    .circle-label {
+      margin: 0;
+      font-size: 13px;
+      color: #cbd5e1;
+      letter-spacing: -0.01em;
+    }
+    .back-wrap {
+      display: flex;
+      justify-content: flex-end;
+      margin-top: 12px;
+    }
+    .back-btn {
+      padding: 12px 14px;
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,0.12);
+      background: linear-gradient(135deg, #22c55e, #14b8a6);
+      color: #0b1224;
+      font-weight: 800;
+      text-decoration: none;
+      box-shadow: 0 12px 30px rgba(0,0,0,0.28);
+      transition: transform 0.12s ease, box-shadow 0.2s ease, background 0.2s ease;
+    }
+    .back-btn:hover { transform: translateY(-1px); box-shadow: 0 16px 36px rgba(0,0,0,0.32); }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <header>
+      <img class="logo" src="../indir.png" alt="Nilüfer Belediyesi Logosu">
+      <div>
+        <h1>Nilüfer Belediyesi Sosyal Tesis Doluluk Paneli</h1>
+        <p class="lead">Canlı giriş-çıkış farkını izleyerek tesislerdeki yoğunluğu anlık takip edin. Veriler scriptler çalıştıkça otomatik güncellenir.</p>
+        <div class="appbar">
+          <span class="pill info" id="badge_main_people">Kütüphane doluluk: -</span>
+          <span class="pill info" id="badge_main_street">Kafe doluluk: -</span>
+        </div>
+      </div>
+    </header>
+
+    <div class="circles" aria-hidden="true">
+      <div class="circle-wrap">
+        <div class="circle" id="circle_main_people">
+          <div class="circle-text" id="circle_text_main_people">-</div>
+        </div>
+        <p class="circle-label">Kütüphane</p>
+      </div>
+      <div class="circle-wrap">
+        <div class="circle" id="circle_main_street">
+          <div class="circle-text" id="circle_text_main_street">-</div>
+        </div>
+        <p class="circle-label">Kafe</p>
+      </div>
+    </div>
+
+    <div class="grid">
+      <div class="card" id="main_people">
+        <h2>main_people.py</h2>
+        <p class="muted">Veri bekleniyor...</p>
+      </div>
+      <div class="card" id="main_street">
+        <h2>main_street.py</h2>
+        <p class="muted">Veri bekleniyor...</p>
+      </div>
+    </div>
+
+    <div class="back-wrap">
+      <a class="back-btn" href="./home.html">Ana Sayfa</a>
+    </div>
+  </div>
+
+  <script>
+    const sources = [
+      { id: "main_people", title: "main_people.py", file: "../data/main_people.json", placeLabel: "Kütüphane" },
+      { id: "main_street", title: "main_street.py", file: "../data/main_street.json", placeLabel: "Kafe" },
+    ];
+    const capacities = {
+      main_people: 200, // Kütüphane
+      main_street: 100, // Kafe
+    };
+
+    function statusPill(fark) {
+      if (fark == null || Number.isNaN(fark)) {
+        return '<span class="pill mid">Veri yok</span>';
+      }
+      if (fark >= 50) return '<span class="pill high">Yüksek yoğunluk</span>';
+      if (fark >= 20) return '<span class="pill mid">Orta yoğunluk</span>';
+      return '<span class="pill ok">Düşük yoğunluk</span>';
+    }
+
+    function occupancyPercent(fark, kapasite) {
+      if (kapasite == null || kapasite === 0) return null;
+      const val = ((Number(fark) || 0) / kapasite) * 100;
+      return Math.max(0, Math.round(val * 10) / 10); // 1 ondalık (ör. 2.5)
+    }
+
+    function updateBadge(id, occ, kapasite) {
+      const el = document.getElementById(`badge_${id}`);
+      if (!el) return;
+      if (occ == null || Number.isNaN(occ)) {
+        el.textContent = `${id === "main_people" ? "Kütüphane" : "Kafe"} doluluk: -`;
+        return;
+      }
+      const label = id === "main_people" ? "Kütüphane" : "Kafe";
+      const fmt = typeof occ === "number" ? occ.toFixed(1) : occ;
+      el.textContent = `${label} doluluk: ${fmt}% / kapasite ${kapasite}`;
+    }
+
+    function updateCircle(id, occ) {
+      const circle = document.getElementById(`circle_${id}`);
+      const text = document.getElementById(`circle_text_${id}`);
+      if (!circle || !text) return;
+      const safeOcc = occ == null || Number.isNaN(occ) ? null : Math.min(Math.max(occ, 0), 200);
+      const deg = safeOcc == null ? 0 : (safeOcc / 100) * 360;
+      circle.style.background = `conic-gradient(#22c55e 0deg ${deg}deg, rgba(255,255,255,0.08) ${deg}deg 360deg)`;
+      text.textContent = safeOcc == null ? "-" : `${safeOcc.toFixed(1)}%`;
+    }
+
+    function render(containerId, payload, error) {
+      const el = document.getElementById(containerId);
+      if (!el) return;
+
+      if (error) {
+        el.innerHTML = `
+          <h2>${payload?.title || containerId}</h2>
+          <p class="error">${error}</p>
+        `;
+        return;
+      }
+
+      const { giren, cikan, fark, video_source, updated_at, placeLabel, id } = payload || {};
+      const kapasite = id ? capacities[id] : undefined;
+      const occ = occupancyPercent(fark, kapasite);
+      const fmtOcc = occ == null ? "-" : occ.toFixed(1);
+      updateBadge(id, occ, kapasite);
+      updateCircle(id, occ);
+      el.innerHTML = `
+        <h2>${payload.title} ${statusPill(fark)}</h2>
+        <div class="stat"><span class="label">Kapasite</span><span class="value">${kapasite ?? "-"}</span></div>
+        <div class="stat"><span class="label">Giren</span><span class="value">${giren ?? "-"}</span></div>
+        <div class="stat"><span class="label">Çıkan</span><span class="value">${cikan ?? "-"}</span></div>
+        <div class="stat"><span class="label">Doluluk farkı (Giren - Çıkan)</span><span class="value">${fark ?? "-"}</span></div>
+        <div class="stat"><span class="label">Doluluk (%)</span><span class="value">${fmtOcc}</span></div>
+        <p class="updated">Güncelleme: ${updated_at || "bekleniyor"}</p>
+      `;
+    }
+
+    async function refresh() {
+      await Promise.all(
+        sources.map(async (src) => {
+          try {
+            const res = await fetch(`${src.file}?t=${Date.now()}`);
+            if (!res.ok) throw new Error("Dosya bulunamadı");
+            const data = await res.json();
+            render(src.id, { ...data, title: src.title, placeLabel: src.placeLabel, id: src.id });
+          } catch (err) {
+            render(src.id, { title: src.title }, err.message);
+          }
+        })
+      );
+    }
+
+    refresh();
+    setInterval(refresh, 2000);
+  </script>
+</body>
+</html>
+
